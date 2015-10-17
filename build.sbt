@@ -17,7 +17,7 @@ val app = crossProject.settings(
   unmanagedSourceDirectories in Compile +=
     baseDirectory.value  / "shared" / "main" / "scala",
 
-  libraryDependencies ++= Seq(
+    libraryDependencies ++= Seq(
     "com.lihaoyi" %%% "scalatags" % "0.5.1",
     "com.lihaoyi" %%% "utest" % "0.3.0",
     "com.lihaoyi" %%% "upickle" % "0.3.6"
@@ -99,3 +99,5 @@ lazy val appJVM = app.jvm.settings(
 
 
 ).enablePlugins(JavaAppPackaging)
+
+sound.play(compile in Compile, Sounds.None, Sounds.Pop)
