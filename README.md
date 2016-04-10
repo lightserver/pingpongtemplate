@@ -14,9 +14,11 @@ It uses both **sbt** and **gulp**.
 
 ## Development
 
- run in order:
- #sbt ~fastOptJS
- #web/gulp
+IN order to run incremental development cycle You need three commands.
+#sbt appJVM/run  - run server
+#sbt ~fastOptJS  - run JS recompilation
+#cd web; gulp - run local web publishing
+
 
 
 ## Release

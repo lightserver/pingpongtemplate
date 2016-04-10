@@ -26,14 +26,14 @@ class Backend($: BackendScope[Unit, PlayfieldState]) {
 
 
   def onPingClick(e: ReactEventI) = {
-    server.sendMessage( PingMessage( "ping", "nikt"))
+    server.sendMessage( PingMessage( "ping", "someone"))
 
 
     println("ping")
   }
 
   def onPongClick(e: ReactEventI) = {
-    server.sendMessage( PingMessage( "pong", "nikt"))
+    server.sendMessage( PingMessage( "pong", "someone"))
 
     println("pong");
   }

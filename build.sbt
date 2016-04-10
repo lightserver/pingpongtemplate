@@ -12,15 +12,14 @@ scalaJSStage in Global := FastOptStage
 skip in packageJSDependencies := false
 
 val app = crossProject.settings(
-  scalaVersion := "2.11.7",
+  scalaVersion := "2.11.8",
 
   unmanagedSourceDirectories in Compile +=
     baseDirectory.value  / "shared" / "main" / "scala",
 
     libraryDependencies ++= Seq(
     "com.lihaoyi" %%% "scalatags" % "0.5.1",
-    "com.lihaoyi" %%% "utest" % "0.3.0",
-    "com.lihaoyi" %%% "upickle" % "0.3.6"
+    "com.lihaoyi" %%% "upickle" % "0.3.8"
   ),
   testFrameworks += new TestFramework("utest.runner.Framework")
 
@@ -48,44 +47,15 @@ val app = crossProject.settings(
   )
 
 lazy val appJS = app.js.settings(
-
-  // include the libanius core JAR
-  //jarek rem:unmanagedBase <<= baseDirectory(_ / "../shared/lib")
 )
 
 lazy val appJVM = app.jvm.settings(
 
 
   version := "0.31",
-
-  // JS files like app-fastopt.js and app-jsdeps.js need to be copied to the server
- /* (resources in Compile) += (fastOptJS in (appJS, Compile)).value.map({ outDir: File =>
-     outDir
-  }) .data,
-  (resources in Compile) += (fastOptJS in (appJS, Compile)).value.map({ outDir: File =>
-    println("mapuje : " + outDir.toString)
-    val mapping =  new File( outDir.getAbsolutePath + ".map")
-    mapping
-  }) .data,*/
-  /*(resources in Compile) += (packageJSDependencies in (appJS, Compile)).value,
-  (resources in Compile) += (packageScalaJSLauncher in (appJS, Compile)).value.data,*/
-
-  // copy resources like quiz.css to the server
   resourceDirectory in Compile <<= baseDirectory(_ / "../shared/src/main/resources"),
+ unmanagedResourceDirectories in Compile <+= baseDirectory(_ / "../jvm/src/main/resources"),
 
-  // allow the server to access shared source
- // that was a problem: unmanagedSourceDirectories in Compile <+= baseDirectory(_ / "../shared/src/main/scala"),
-
-  // application.conf too must be in the classpath
-  // application.conf too must be in the classpath
-  unmanagedResourceDirectories in Compile <+= baseDirectory(_ / "../jvm/src/main/resources"),
-  /*(unmanagedResourceDirectories in Compile) += baseDirectory(_ / "../../web/.tmp" ).value.map(
-  { outDir: File =>
-    println("mapujex : " + outDir.toString)
-    val mapping =  new File( outDir.getAbsolutePath + ".map")
-    mapping
-  }
-  ),*/
   resourceGenerators in Compile <+= Def.task {
     val log = streams.value.log
     //log.info(s"APP: ${((classDirectory in Compile).value / "material-ui-app.html").getCanonicalPath}")
@@ -100,4 +70,3 @@ lazy val appJVM = app.jvm.settings(
 
 ).enablePlugins(JavaAppPackaging)
 
-sound.play(compile in Compile, Sounds.None, Sounds.Pop)
