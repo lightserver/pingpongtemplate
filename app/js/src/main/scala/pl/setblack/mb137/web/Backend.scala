@@ -7,6 +7,8 @@ class Backend($: BackendScope[Unit, PlayfieldState]) {
 
   val server = new ServerConnection(this)
 
+  var cnt = 0
+
   def newMessage(msg: PingMessage) = {
     println(s"received ${msg}")
     $.modState( (s:PlayfieldState) => {
@@ -26,15 +28,16 @@ class Backend($: BackendScope[Unit, PlayfieldState]) {
 
 
   def onPingClick(e: ReactEventI) = {
-    server.sendMessage( PingMessage( "ping", "someone"))
+    server.sendMessage( PingMessage( "ping", "someone", cnt))
 
-
+    cnt = cnt+1
     println("ping")
   }
 
   def onPongClick(e: ReactEventI) = {
-    server.sendMessage( PingMessage( "pong", "someone"))
+    server.sendMessage( PingMessage( "pong", "someone", cnt))
 
+    cnt = cnt+1
     println("pong");
   }
 

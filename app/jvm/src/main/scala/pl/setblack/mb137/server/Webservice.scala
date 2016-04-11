@@ -46,7 +46,7 @@ class Webservice(implicit fm: Materializer, system: ActorSystem) extends Directi
       case TextMessage.Strict(msg) => msg
     }.via(theBackend.theFlow(sender))
       .map {
-      case msg@PingMessage(text, author) => {
+      case msg:PingMessage=> {
         println(s"sennding ${msg}")
         TextMessage.Strict(write[PingMessage](msg))
       }

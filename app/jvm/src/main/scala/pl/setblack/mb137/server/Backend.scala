@@ -21,7 +21,7 @@ object Backend {
     val boardActor:ActorRef =
       system.actorOf(Props(new Actor {
         var subscribers = Set.empty[ActorRef]
-
+        var cnt = 0
         def receive: Receive = {
           case NewParticipant(name, subscriber) ⇒
             context.watch(subscriber)
@@ -35,8 +35,9 @@ object Backend {
             val answer =  PingMessage ( msg =  clientMessage.msg match  {
               case "ping" => "pong"
               case _ => "ping"
-            }, author =  clientMessage.author)
+            }, author =  clientMessage.author, cnt)
             subscribers.foreach( s => s ! answer)
+            cnt = cnt + 1
 
           }
           case ParticipantLeft(person) ⇒ println(s"{person} left")
@@ -58,7 +59,7 @@ object Backend {
         val out =
           Source.actorRef[PingMessage](10, OverflowStrategy.fail)
             .mapMaterializedValue(boardActor ! NewParticipant(sender, _))
-        Flow.wrap(in, out)(Keep.none)
+        Flow.fromSinkAndSource(in, out)
       }
 
       def injectMessage(message: BoardEvent): Unit = boardActor ! message // non-streams interface

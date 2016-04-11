@@ -18,30 +18,27 @@ val app = crossProject.settings(
     baseDirectory.value  / "shared" / "main" / "scala",
 
     libraryDependencies ++= Seq(
-    "com.lihaoyi" %%% "scalatags" % "0.5.1",
+
     "com.lihaoyi" %%% "upickle" % "0.3.8"
   ),
   testFrameworks += new TestFramework("utest.runner.Framework")
 
 ).jsSettings(
     libraryDependencies ++= Seq(
-      "org.scala-js" %%% "scalajs-dom" % "0.8.0",
+
       "com.github.japgolly.scalajs-react" %%% "core" % "0.8.3",
-      "com.github.japgolly.scalajs-react" %%% "extra" % "0.8.3",
-      "com.lihaoyi" %%% "scalarx" % "0.2.8"
+      "com.github.japgolly.scalajs-react" %%% "extra" % "0.8.3"
+
     ),
-    // React itself (react-with-addons.js can be react.js, react.min.js, react-with-addons.min.js)
     jsDependencies += "org.webjars" % "react" % "0.13.1" / "react-with-addons.js" commonJSName "React",
-    skip in packageJSDependencies := false ,// creates app-jsdeps.js with the react JS lib inside
+    skip in packageJSDependencies := true ,
      persistLauncher in Compile := true
   ).jvmSettings(
     libraryDependencies ++= Seq(
-      "io.spray" %% "spray-can" % "1.3.2",
-      "io.spray" %% "spray-routing" % "1.3.2",
-      "com.typesafe.akka" %% "akka-actor" % "2.3.6",
-      "com.typesafe.akka" %% "akka-remote" % "2.3.6",
+      "com.typesafe.akka" %% "akka-actor" % "2.4.1",
+      "com.typesafe.akka" %% "akka-remote" % "2.4.1",
       "org.scalaz" %% "scalaz-core" % "7.1.2",
-      "com.typesafe.akka" %% "akka-http-experimental" % "1.0",
+      "com.typesafe.akka" %% "akka-http-experimental" % "2.0.1",
       "org.scalatest" %% "scalatest" % "2.2.1" % "test"
     )
   )
