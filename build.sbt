@@ -31,7 +31,7 @@ val app = crossProject.settings(
 
     ),
     jsDependencies += "org.webjars" % "react" % "0.13.1" / "react-with-addons.js" commonJSName "React",
-    skip in packageJSDependencies := true ,
+    skip in packageJSDependencies := false ,
      persistLauncher in Compile := true
   ).jvmSettings(
     libraryDependencies ++= Seq(

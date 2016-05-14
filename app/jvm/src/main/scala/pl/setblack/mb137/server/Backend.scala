@@ -35,7 +35,7 @@ object Backend {
             val answer =  PingMessage ( msg =  clientMessage.msg match  {
               case "ping" => "pong"
               case _ => "ping"
-            }, author =  clientMessage.author, cnt)
+            }, author =  clientMessage.author)
             subscribers.foreach( s => s ! answer)
             cnt = cnt + 1
 

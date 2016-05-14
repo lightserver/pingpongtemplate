@@ -10,6 +10,6 @@ case class PlayfieldState(pingMessages: Seq[PingMessage], pongMessages: Seq[Ping
   }
 }
 
-case class PingMessage(msg: String, author: String, cnt: Int)
+case class PingMessage(msg: String, author: String )
 
 
